@@ -1,0 +1,14 @@
+{
+  "name": "TranslateMeServer",
+  "version": "1.0.0",
+  "description": "basic chat server with socket.io",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1",
+    "sqlite3": "^4.0.6"
+  }
+}
