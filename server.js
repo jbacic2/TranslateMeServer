@@ -47,7 +47,7 @@ wss.on('connection', (ws) => {
             currentPerson.role = data.data.role;
 
     
-            console.log(currentPerson)
+            console.log("logon" + currentPerson)
 
             lookForMatch(currrentPerson);
 
@@ -56,6 +56,7 @@ wss.on('connection', (ws) => {
             currentPerson.longitude = data.data.longitude;
             currentPerson.latitude = data.data.latitude;
 
+            console.log("locationUPdate" + currentPerson)
             if (currentPerson.matchedWith != null) {
                 mapUpdate(currentPerson);
             } else {
