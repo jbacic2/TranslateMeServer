@@ -217,7 +217,10 @@ function match(aUser, aTranslator) {
 
 function mapUpdate(currentPerson) {
     //will send user data to other person
+    
+    let matchedWithUser = appUsers.filter(u => u.username == currentPerson.matchedWith)
+
     var locData = JSON.stringify(currentPerson);
-    currentPerson.matchedWith.socketID.send(locData);
+    matchedWithUser[0].socketID.send(locData);
 
 }
