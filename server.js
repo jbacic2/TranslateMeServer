@@ -1,19 +1,21 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+
+app.use(express.json())
 
 var appUsers =[];
 
 app.get('/', (req, res) => res.send('hello'))
 
 app.post("/register", function(req,res){
-    let dataObj = JSON.parse(req.body)
     newUser = {
-        username: dataObj.username,
-        name: dataObj.name,
+        username: req.body.username,
+        name: req.body.name,
         role: 'OFFLINE',
-        longitude: dataObj.longitude,
-        latitude: dataObj.latitude,
+        longitude: req.body.longitude,
+        latitude: req.body.latitude,
         socketID: null,
         matchedWith: null
     }
