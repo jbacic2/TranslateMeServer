@@ -2,7 +2,8 @@ const express           = require('express');
 const app               = express();
 const server            = require('http').createServer(app);
 //const io                = require('socket.io')(server);
-const wss               = require('websocket').server;
+const WebSocket = require('ws')
+const wss = new WebSocket.Server({server: server})
 
 app.use(express.json())
 
@@ -26,23 +27,20 @@ var appUsers = [newUser = {
     
 // })  
 
-wsServer = new wss({
-    httpServer: server,
-    autoAcceptConnections: false
-})
-
 const originIsAllowed = (origin) => {
     return true;
 }
 
-wsServer.on('connect', (ws) => {
+wss.on('connection', (ws) => {
+
+    console.log("Connected!")
     //const connection = req.accept('echo-protocol', req.origin);
 
     //console.log((new Date()) + "Accepted");
 
     //get id
 
-    connection.on('*', (message) => {
+    /*connection.on('*', (message) => {
         console.log("Received data" + message);
 
         let data=message.data
@@ -76,7 +74,7 @@ wsServer.on('connect', (ws) => {
             }
         }
 
-    })
+    })*/
 })//on connect
 
 
@@ -84,7 +82,7 @@ wsServer.on('connect', (ws) => {
 
 
 //express.static('/');
-app.use(express.static(__dirname));
+//app.use(express.static(__dirname));
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'))
 
