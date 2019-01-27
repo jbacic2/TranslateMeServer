@@ -50,6 +50,7 @@ wss.on('connection', (ws) => {
             console.log("logon" + currentPerson)
 
             lookForMatch(currentPerson);
+            
 
         }//longon
         else if(data.type =="locationUpdate"){
