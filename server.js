@@ -112,13 +112,7 @@ function lookForMatch(currentPerson) {
     //check for match USER
     if (currentPerson.role == "USER") {
 
-        var currentTranslators = [];
-
-        //find list of tranlators
-        for (let i = 0; i < appUsers.length; i++) {
-            if (appUsers[i].role == "TRANSLATOR")
-                currentTranslators.push(appUsers[i]);
-        }
+        let currentTranslators = appUsers.filter(u => u.role == "TRANSLATOR")
 
         //if there are multiple translators find the closest
         if (currentTranslators.length > 0) {
@@ -135,15 +129,8 @@ function lookForMatch(currentPerson) {
         } //if 
     } else if (currentPerson.role == "TRANSLATOR") {
 
-        var currentUsers = [];
-
-        //find list of users
-        for (let i = 0; i < appUsers.length; i++) {
-            if (appUsers[i].role == "USER")
-                currentUsers.push(appUsers[i]);
-        }
-
-
+        let currentUsers = appUsers.filter(u => u.role == "USER")
+        
         if (currentUsers.length > 0) {
             var nearestUser = currentUsers[0];
 
