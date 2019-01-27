@@ -113,6 +113,8 @@ function lookForMatch(currentPerson) {
     if (currentPerson.role == "USER") {
 
         let currentTranslators = appUsers.filter(u => u.role == "TRANSLATOR")
+        console.log(currentTranslators)
+        console.log(appUsers)
 
         //if there are multiple translators find the closest
         if (currentTranslators.length > 0) {
