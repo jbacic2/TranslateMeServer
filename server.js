@@ -31,9 +31,9 @@ wss.on('connection', (ws) => {
 
         let currrentPerson;
         console.log(appUsers)
-        for (person of appUsers) {
-            if (person.username == data.data.username)
-                currentPerson = person;
+        for (let i =0; i<appUsers.length; i++) {
+            if (appUsers[i].username == data.data.username)
+                currentPerson = appUsers[i];
         }
     
         
