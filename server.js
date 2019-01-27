@@ -2,7 +2,7 @@ const express           = require('express');
 const app               = express();
 const server            = require('http').createServer(app);
 const io                = require('socket.io')(server);
-const WebSocketServer   = require('websocket').server;
+const wss               = require('websocket').server;
 
 app.use(express.json())
 
@@ -22,7 +22,31 @@ var appUsers = [newUser = {
 /**
  * Second test for sockets
  */
+var server = http.createServer((req, res) => {
+    
+})  
 
+wsServer = new wss({
+    httpServer: server,
+    autoAcceptConnections: false
+})
+
+const originIsAllowed = (origin) => {
+    return true;
+}
+
+wsServer.on('request', (req) => {
+    const connection = req.accept('echo-protocol', req.origin);
+
+    console.log((new Date()) + "Accepted");
+
+    connection.on('logon', (message) => {
+        console.log("Received data" + message);
+    })
+})
+
+
+//------------------------------------------------------
 
 
 //express.static('/');
