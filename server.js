@@ -1,11 +1,29 @@
-const express = require('express');
-const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const express           = require('express');
+const app               = express();
+const server            = require('http').createServer(app);
+const io                = require('socket.io')(server);
+const WebSocketServer   = require('websocket').server;
 
 app.use(express.json())
 
-var appUsers = [];
+
+//Fake user for testing
+var appUsers = [newUser = {
+    username: 'omar',
+    name: 'hi',
+    role: 'OFFLINE',
+    longitude: 12,
+    latitude: 14,
+    socketID: null,
+    matchedWith: null
+}];
+
+
+/**
+ * Second test for sockets
+ */
+
+
 
 //express.static('/');
 app.use(express.static(__dirname));
