@@ -206,6 +206,7 @@ function match(aUser, aTranslator) {
                 path:locDataObj.routes[0].geometry,
                 user:  aTranslator 
             }
+            
             aUser.socketID.send(JSON.stringify(message));
 
             message["user"]= aUser
