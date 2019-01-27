@@ -42,6 +42,7 @@ wss.on('connection', (ws) => {
         if (data.type === 'logon'){
 
             appUsers[index].socketID = ws;
+            console.log(ws)
     
             appUsers[index].longitude = data.data.longitude;
             appUsers[index].latitude = data.data.latitude;
@@ -135,7 +136,7 @@ function lookForMatch(currentPerson) {
         console.log(appUsers)
 
         //if there are multiple translators find the closest
-        if (currentTranslators.length > 0) {
+        if (currentTranslators.length > 0 && currentPerson.longitude) {
             console.log(currentTranslators)
             var nearestTranslator = currentTranslators[0];
 
@@ -151,7 +152,7 @@ function lookForMatch(currentPerson) {
 
         let currentUsers = appUsers.filter(u => u.role == "USER")
 
-        if (currentUsers.length > 0) {
+        if (currentUsers.length > 0 && currentPerson.longitude) {
             var nearestUser = currentUsers[0];
 
             for (user in currentUsers) {
