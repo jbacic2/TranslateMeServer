@@ -49,9 +49,6 @@ wss.on('connection', (ws) => {
             appUsers[index].latitude = data.data.latitude;
             appUsers[index].role = data.data.role;
 
-    
-            console.log("logon" + appUsers[index])
-
             //lookForMatch(currentPerson);
 
 
@@ -60,7 +57,6 @@ wss.on('connection', (ws) => {
             appUsers[index].longitude = data.data.longitude;
             appUsers[index].latitude = data.data.latitude;
 
-            console.log("locationUPdate" + appUsers[index])
             if (appUsers[index].matchedWith != null) {
                 mapUpdate(appUsers[index]);
             } else {
@@ -116,7 +112,6 @@ function lookForMatch(currentPerson) {
     //check for match USER
     if (currentPerson.role == "USER") {
 
-        console.log("user")
         var currentTranslators = [];
 
         //find list of tranlators
@@ -193,7 +188,7 @@ function match(aUser, aTranslator) {
 
         resp.on('end', () => {
             let locDataObj = JSON.parse(data);
-            
+            console.log(data)
 
             var message = {
                 path:locDataObj.routes[0].geometry,
