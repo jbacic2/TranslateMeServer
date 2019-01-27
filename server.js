@@ -223,7 +223,7 @@ function match(aUser, aTranslator) {
 
             aUser.socketID.send(JSON.stringify(message));
 
-            message["user"]= aUser
+            message.user = aUser
             aTranslator.socketID.send(JSON.stringify(message));
 
         })
