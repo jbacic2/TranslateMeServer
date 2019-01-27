@@ -49,7 +49,6 @@ wss.on('connection', (ws) => {
     
                 appUsers[index].longitude = data.data.longitude;
                 appUsers[index].latitude = data.data.latitude;
-                
             } else {
                 // Remove any matches that were legft
                 appUsers[index].matchedWith = null;
