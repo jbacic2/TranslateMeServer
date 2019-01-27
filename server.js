@@ -168,15 +168,19 @@ function lookForMatch(currentPerson) {
 
 function findDist(person1, person2) {
     var earthRadius = 3958.75;
-    var latDiff = Math.toRadians(person1.latitude - person2.latitude);
-    var lngDiff = Math.toRadians(person1.longitude - person2.longitude);
-    var a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2) + Math.cos(Math.toRadians(person2.latitude)) * Math.cos(Math.toRadians(person1.latitude)) * Math.sin(lngDiff / 2) * Math.sin(lngDiff / 2);
+    var latDiff = radians(person1.latitude - person2.latitude);
+    var lngDiff = radians(person1.longitude - person2.longitude);
+    var a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2) + Math.cos(radians(person2.latitude)) * Math.cos(radians(person1.latitude)) * Math.sin(lngDiff / 2) * Math.sin(lngDiff / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var distance = earthRadius * c;
 
     var meterConversion = 1609;
 
     return distance * meterConversion;
+}
+
+function radians(deg){
+    return deg*(Math.PI)
 }
 
 function match(aUser, aTranslator) {
