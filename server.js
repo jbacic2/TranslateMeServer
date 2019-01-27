@@ -35,15 +35,49 @@ const originIsAllowed = (origin) => {
     return true;
 }
 
-wsServer.on('request', (req) => {
-    const connection = req.accept('echo-protocol', req.origin);
+wsServer.on('connect', (ws) => {
+    //const connection = req.accept('echo-protocol', req.origin);
 
-    console.log((new Date()) + "Accepted");
+    //console.log((new Date()) + "Accepted");
 
-    connection.on('logon', (message) => {
+    //get id
+
+    connection.on('*', (message) => {
         console.log("Received data" + message);
+
+        let data=message.data
+
+        if (message.type == 'logon'){
+
+            let currrentPerson;
+
+            for (person of appUsers) {
+                if (person.username == data.username)
+                    currentPerson = person;
+            }
+    
+            currentPerson.socketID = ws;
+    
+            currentPerson.longitude = data.longitude;
+            currentPerson.latitude = data.latitude;
+            currentPerson.role = data.role;
+    
+            console.log(currentPerson)
+
+        }//longon
+        else if(message.type =="locationUpdate"){
+            currentPerson.longitude = data.longitude;
+            currentPerson.latitude = data.latitude;
+
+            if (currentPerson.matched == true) {
+                mapUpdate(currentPerson);
+            } else {
+                lookForMatch(currentPerson);
+            }
+        }
+
     })
-})
+})//on connect
 
 
 //------------------------------------------------------
@@ -71,41 +105,41 @@ app.post("/register", function (req, res) {
     }))
 })
 
-//sockets    
-io.on('connection', (socket) => {
-    socket.emit("logon",
-        newUser = {
-            username: 'omar',
-            name: 'hi',
-            role: 'OFFLINE',
-            longitude: 12,
-            latitude: 14,
-            socketID: null,
-            matchedWith: null
-        })
+// //sockets    
+// io.on('connection', (socket) => {
+//     socket.emit("logon",
+//         newUser = {
+//             username: 'omar',
+//             name: 'hi',
+//             role: 'OFFLINE',
+//             longitude: 12,
+//             latitude: 14,
+//             socketID: null,
+//             matchedWith: null
+//         })
 
-    let thisSocketID = socket.id;
-    let currentPerson;
+//     let thisSocketID = socket.id;
+//     let currentPerson;
 
-    //currentPerson.socketID = socket.id;
-    socket.on("logon", (data) => {
-        let temp = data
+//     //currentPerson.socketID = socket.id;
+//     socket.on("logon", (data) => {
+//         let temp = data
 
-        console.log(temp);
+//         console.log(temp);
 
-        for (person of appUsers) {
-            if (person.username == temp.username)
-                currentPerson = person;
-        }
+//         for (person of appUsers) {
+//             if (person.username == temp.username)
+//                 currentPerson = person;
+//         }
 
-        currentPerson.socketID = thisSocketID;
+//         currentPerson.socketID = thisSocketID;
 
-        currentPerson.longitude = temp.longitude;
-        currentPerson.latitude = temp.latitude;
-        currentPerson.role = temp.role;
+//         currentPerson.longitude = temp.longitude;
+//         currentPerson.latitude = temp.latitude;
+//         currentPerson.role = temp.role;
 
-        console.log(currentPerson)
-    })
+//         console.log(currentPerson)
+//     })
 
     //let currentPerson;
 
@@ -132,19 +166,19 @@ io.on('connection', (socket) => {
 
 
     //updates location
-    socket.on("locationUpdate", function (from, data) {
-        currentPerson.longitude = req.body.longitude;
-        currentPerson.latitude = req.body.latitude;
+//     socket.on("locationUpdate", function (from, data) {
+//         currentPerson.longitude = req.body.longitude;
+//         currentPerson.latitude = req.body.latitude;
 
-        if (currentPerson.matched == true) {
-            mapUpdate(currentPerson);
-        } else {
-            lookForMatch(currentPerson);
-        }
+//         if (currentPerson.matched == true) {
+//             mapUpdate(currentPerson);
+//         } else {
+//             lookForMatch(currentPerson);
+//         }
 
-    });
+//     });
 
-}); //io.on connect
+// }); //io.on connect
 
 
 
@@ -233,21 +267,24 @@ function match(aUser, aTranslator) {
 
         resp.on('end', () => {
             let locDataObj = JSON.parse(data);
-            locDataObj.routes[0].geometry
+            
+
+            var message = {
+                path:locDataObj.routes[0].geometry,
+                user:  aTranslator 
+            }
+            aUser.socketID.send(JSON.stringify(message));
+
+            message["user"]= aUser
+            aTranslator.socketID.send(JSON.stringify(message));
+
         })
     }) //https get request
-
-
-
-    var locTranslator = JSON.stringify(aTranslator.location);
-    var locUser = JSON.stringify(aUser.location);
-    io.to(`${aUser.socketID}`).emit('foundMatch', locTranslator);
-    io.to(`${aTranslator.socketID}`).emit('foundMatch', locUser);
 }
 
 function mapUpdate(currentPerson) {
     //will send user data to other person
-    var locData = currentPerson.matchedWith.location;
-    io.to(`${currentPerson.matchedWith.socketID}`).emit('foundMatch', locData);
+    var locData = JSON.stringify(currentPerson);
+    currentPerson.matchedWith.socketID.send(locData);
 
 }
