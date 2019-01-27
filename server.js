@@ -136,12 +136,12 @@ function lookForMatch(currentPerson) {
         console.log(appUsers)
 
         //if there are multiple translators find the closest
-        if (currentTranslators.length > 0 && currentPerson.longitude) {
+        if (currentTranslators.length > 0) {
             console.log(currentTranslators)
             var nearestTranslator = currentTranslators[0];
 
             for (translator in currentTranslators) {
-                if (findDist(currentPerson.location, nearestTranslator.location) > findDist(currentPerson.location, translator.location))
+                if (findDist(currentPerson, nearestTranslator) > findDist(currentPerson, translator))
                     nearestTranslator = translator;
             }
 
@@ -152,11 +152,11 @@ function lookForMatch(currentPerson) {
 
         let currentUsers = appUsers.filter(u => u.role == "USER")
 
-        if (currentUsers.length > 0 && currentPerson.longitude) {
+        if (currentUsers.length > 0) {
             var nearestUser = currentUsers[0];
 
             for (user in currentUsers) {
-                if (findDist(currentPerson.location, nearestUser.location) > findDist(currentPerson.location, user.location))
+                if (findDist(currentPerson, nearestUser) > findDist(currentPerson, user))
                     nearestUser = user
             }
 
