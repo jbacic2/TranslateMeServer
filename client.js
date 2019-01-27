@@ -1,20 +1,20 @@
-let socket = io('http://' + window.document.location.host);
+//let socket = io('http://' + window.document.location.host);
 
 //console.log(socket);
 
-console.log("hi im here")
+// console.log("hi im here")
 
 
-console.log("hi");
+// console.log("hi");
 
-let newUser = {
-    username: 'omar',
-    name: 'hi',
-    role: 'OFFLINE',
-    longitude: 12,
-    latitude: 14,
-    socketID: null,
-    matchedWith: null
-}
+// let newUser = {
+//     username: 'omar',
+//     name: 'hi',
+//     role: 'OFFLINE',
+//     longitude: 12,
+//     latitude: 14,
+//     socketID: null,
+//     matchedWith: null
+// }
 
-socket.emit('logon', newUser);
+// socket.emit('logon', newUser);

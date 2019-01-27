@@ -1,7 +1,7 @@
 const express           = require('express');
 const app               = express();
 const server            = require('http').createServer(app);
-const io                = require('socket.io')(server);
+//const io                = require('socket.io')(server);
 const wss               = require('websocket').server;
 
 app.use(express.json())
@@ -22,9 +22,9 @@ var appUsers = [newUser = {
 /**
  * Second test for sockets
  */
-var server = http.createServer((req, res) => {
+// var server = http.createServer((req, res) => {
     
-})  
+// })  
 
 wsServer = new wss({
     httpServer: server,
