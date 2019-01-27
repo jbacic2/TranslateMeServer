@@ -90,6 +90,29 @@ app.post("/register", function (req, res) {
     }))
 })
 
+// Lets us delete accounts
+app.delete("/register", function (req, res) {
+    deleteUser = {
+        username: req.body.username,
+        name: req.body.name,
+        role: 'OFFLINE',
+        longitude: req.body.longitude,
+        latitude: req.body.latitude,
+        socketID: null,
+        matchedWith: null
+    }
+
+    for (let i = 0; i < appUsers.length; i++) {
+        if (appUsers[i].username === deleteUser.username) {
+            appUsers.splice(i, 1)
+            break;
+        }
+    }
+
+    res.send(JSON.stringify({
+        approved: true
+    }))
+})
 
 
 
