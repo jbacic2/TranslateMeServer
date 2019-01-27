@@ -60,12 +60,12 @@ server.listen(3000);//************ */
 
 
 //closing data base
-db.close((err) => {
+/*db.close((err) => {
     if (err) {
       return console.error(err.message);
     }
     console.log('Close the database connection.');
-  });
+  });*/
 
   //*********************************************** 
   //********************************************* */
