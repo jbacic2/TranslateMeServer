@@ -203,7 +203,7 @@ function match(aUser, aTranslator) {
     console.log(`https://api.mapbox.com/directions/v5/mapbox/walking/${aTranslator.longitude},${aTranslator.latitude};${aUser.longitude},${aUser.latitude}.json?access_token=${mapKey}&overview=full`)
 
     //calculate path with api
-    https.get(`https://api.mapbox.com/directions/v5/mapbox/walking/${aTranslator.longitude},${aTranslator.latitude};${aUser.longitude},${aUser.latitude}.json?access_token=${mapKey}&overview=full`, (resp) => {
+    https.get(`https://api.mapbox.com/directions/v5/mapbox/walking/${aTranslator.latitude},${aTranslator.longitude};${aUser.latitude},${aUser.longitude}.json?access_token=${mapKey}&overview=full`, (resp) => {
         let data = ''
 
         resp.on('data', (chunk) => {
