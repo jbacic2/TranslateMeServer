@@ -37,27 +37,27 @@ wss.on('connection', (ws) => {
     ws.on('message', function incoming(message) {
         let data = JSON.parse(message)
 
-        if (message.type == 'logon'){
+        if (data.type == 'logon'){
 
             let currrentPerson;
 
             for (person of appUsers) {
-                if (person.username == data.username)
+                if (person.username == data.data.username)
                     currentPerson = person;
             }
     
             currentPerson.socketID = ws;
     
-            currentPerson.longitude = data.longitude;
-            currentPerson.latitude = data.latitude;
-            currentPerson.role = data.role;
+            currentPerson.longitude = data.data.longitude;
+            currentPerson.latitude = data.data.latitude;
+            currentPerson.role = data.data.role;
     
             console.log(currentPerson)
 
         }//longon
-        else if(message.type =="locationUpdate"){
-            currentPerson.longitude = data.longitude;
-            currentPerson.latitude = data.latitude;
+        else if(data.type =="locationUpdate"){
+            currentPerson.longitude = data.data.longitude;
+            currentPerson.latitude = data.data.latitude;
 
             if (currentPerson.matched == true) {
                 mapUpdate(currentPerson);
@@ -96,81 +96,6 @@ app.post("/register", function (req, res) {
         approved: true
     }))
 })
-
-// //sockets    
-// io.on('connection', (socket) => {
-//     socket.emit("logon",
-//         newUser = {
-//             username: 'omar',
-//             name: 'hi',
-//             role: 'OFFLINE',
-//             longitude: 12,
-//             latitude: 14,
-//             socketID: null,
-//             matchedWith: null
-//         })
-
-//     let thisSocketID = socket.id;
-//     let currentPerson;
-
-//     //currentPerson.socketID = socket.id;
-//     socket.on("logon", (data) => {
-//         let temp = data
-
-//         console.log(temp);
-
-//         for (person of appUsers) {
-//             if (person.username == temp.username)
-//                 currentPerson = person;
-//         }
-
-//         currentPerson.socketID = thisSocketID;
-
-//         currentPerson.longitude = temp.longitude;
-//         currentPerson.latitude = temp.latitude;
-//         currentPerson.role = temp.role;
-
-//         console.log(currentPerson)
-//     })
-
-    //let currentPerson;
-
-    //console.log("This is the socket", socket)
-
-    //find user
-    // for (person of appUsers){
-    //     if (person.username == req.body.username)
-    //         currentPerson = person;
-    // }
-
-    // currentPerson.longitude = req.body.longitude;
-    // currentPerson.latitude = req.body.latitude;
-    // currentPerson.role = req.body.role;
-
-
-    //lookForMatch(currentPerson);
-
-    /*app.post("/login", function(req,res){
-    
-
-        send.res("");
-    });*/
-
-
-    //updates location
-//     socket.on("locationUpdate", function (from, data) {
-//         currentPerson.longitude = req.body.longitude;
-//         currentPerson.latitude = req.body.latitude;
-
-//         if (currentPerson.matched == true) {
-//             mapUpdate(currentPerson);
-//         } else {
-//             lookForMatch(currentPerson);
-//         }
-
-//     });
-
-// }); //io.on connect
 
 
 
