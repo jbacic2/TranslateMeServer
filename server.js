@@ -29,31 +29,26 @@ wss.on('connection', (ws) => {
     console.log("Connected!")
     ws.on('message', function incoming(message) {
         let data = JSON.parse(message)
+        console.log('received: %s', message);
 
-        let currrentPerson;
         let index = 0;
-        for (let i =0; i<appUsers.length; i++) {
-            if (appUsers[i].username == data.data.username)
-                currentPerson = appUsers[i];
+        for (let i =0; i < appUsers.length; i++) {
+            if (appUsers[i].username === data.data.username)
                 index = i;
                 break;
         }
-    
-        
 
-        if (data.type == 'logon'){
+        if (data.type === 'logon'){
 
             appUsers[index].socketID = ws;
     
             appUsers[index].longitude = data.data.longitude;
             appUsers[index].latitude = data.data.latitude;
             appUsers[index].role = data.data.role;
-
             //lookForMatch(currentPerson);
 
-
         }//longon
-        else if(data.type =="locationUpdate"){
+        else if(data.type === "locationUpdate"){
             appUsers[index].longitude = data.data.longitude;
             appUsers[index].latitude = data.data.latitude;
 
@@ -64,7 +59,6 @@ wss.on('connection', (ws) => {
             }
         }
 
-        console.log('received: %s', message);
       });
     
 })//on connect
