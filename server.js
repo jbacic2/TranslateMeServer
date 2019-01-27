@@ -37,29 +37,34 @@ wss.on('connection', (ws) => {
     ws.on('message', function incoming(message) {
         let data = JSON.parse(message)
 
+        let currrentPerson;
+
+        for (person of appUsers) {
+            if (person.username == data.data.username)
+                currentPerson = person;
+        }
+    
+        
+
         if (data.type == 'logon'){
 
-            let currrentPerson;
-
-            for (person of appUsers) {
-                if (person.username == data.data.username)
-                    currentPerson = person;
-            }
-    
             currentPerson.socketID = ws;
     
             currentPerson.longitude = data.data.longitude;
             currentPerson.latitude = data.data.latitude;
             currentPerson.role = data.data.role;
+
     
             console.log(currentPerson)
+
+            lookForMatch(currrentPerson);
 
         }//longon
         else if(data.type =="locationUpdate"){
             currentPerson.longitude = data.data.longitude;
             currentPerson.latitude = data.data.latitude;
 
-            if (currentPerson.matched == true) {
+            if (currentPerson.matchedWith != null) {
                 mapUpdate(currentPerson);
             } else {
                 lookForMatch(currentPerson);
