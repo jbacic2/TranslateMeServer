@@ -184,8 +184,12 @@ server.listen(process.env.PORT || 8080); //************ */
 
 function lookForMatch(currentPerson) {
 
+    console.log("lookForMatch")
+
     //check for match USER
     if (currentPerson.role == "USER") {
+
+        console.log("user")
         var currentTranslators = [];
 
         //find list of tranlators
@@ -209,6 +213,8 @@ function lookForMatch(currentPerson) {
     }
 
     if (currentPerson.role == "TRANSLATOR") {
+        console.log("translator")
+
         var currentUsers = [];
 
         //find list of users
@@ -246,6 +252,8 @@ function findDist(person1, person2) {
 }
 
 function match(aUser, aTranslator) {
+
+    console.log("match")
     aUser.matchedWith = aTranslator.username;
     aTranslator.matchedWith = aUser.username;
 
