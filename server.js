@@ -33,9 +33,10 @@ wss.on('connection', (ws) => {
 
         let index = 0;
         for (let i =0; i < appUsers.length; i++) {
-            if (appUsers[i].username === data.data.username)
+            if (appUsers[i].username === data.data.username) {
                 index = i;
                 break;
+            }
         }
 
         if (data.type === 'logon'){
