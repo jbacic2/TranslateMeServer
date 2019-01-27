@@ -122,6 +122,7 @@ function lookForMatch(currentPerson) {
 
         //if there are multiple translators find the closest
         if (currentTranslators.length > 0) {
+            console.log(currentTranslators)
             var nearestTranslator = currentTranslators[0];
 
             for (translator in currentTranslators) {
@@ -132,9 +133,7 @@ function lookForMatch(currentPerson) {
             match(currentPerson, nearestTranslator);
 
         } //if 
-    }
-
-    if (currentPerson.role == "TRANSLATOR") {
+    } else if (currentPerson.role == "TRANSLATOR") {
 
         var currentUsers = [];
 
