@@ -30,18 +30,20 @@ io.on('connection', (socket) => {
     //currentPerson.socketID = socket.id;
     let currentPerson;
     
-    //find user
-    for (person of appUsers){
-        if (person.username == req.body.username)
-            currentPerson = person;
-    }
+    console.log("This is the socket", socket)
 
-    currentPerson.longitude = req.body.longitude;
-    currentPerson.latitude = req.body.latitude;
-    currentPerson.role = req.body.role;
+    //find user
+    // for (person of appUsers){
+    //     if (person.username == req.body.username)
+    //         currentPerson = person;
+    // }
+
+    // currentPerson.longitude = req.body.longitude;
+    // currentPerson.latitude = req.body.latitude;
+    // currentPerson.role = req.body.role;
         
 
-    lookForMatch(currentPerson);
+    //lookForMatch(currentPerson);
 
     /*app.post("/login", function(req,res){
     
@@ -157,7 +159,7 @@ server.listen(process.env.PORT || 8080);//************ */
         })
       })//https get request
      
-     
+      
 
       var locTranslator = JSON.stringify(aTranslator.location);
       var locUser = JSON.stringify(aUser.location);
