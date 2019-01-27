@@ -11,7 +11,8 @@ app.post("/register", function(req,res){
         username: req.body.username,
         name: req.body.name,
         role: 'OFFLINE',
-        location: req.body.location,
+        longitude: req.body.longitude,
+        latitude: req.body.latitude,
         socketID: null,
         matchedWith: null
     }
@@ -29,7 +30,8 @@ app.post("/login", function(req,res){
             currentPerson = person;
     }
 
-    currentPerson.location = req.body.location;
+    currentPerson.longitude = req.body.longitude;
+    currentPerson.latitude = req.body.latitude;
     currentPerson.role = req.body.role;
 
     //sockets    
@@ -41,7 +43,8 @@ app.post("/login", function(req,res){
 
         //updates location
         socket.on("locationUpdate", function(from, data){
-            currentPerson.location = data.location;
+            currentPerson.longitude = req.body.longitude;
+            currentPerson.latitude = req.body.latitude;
 
             if (currentPerson.matched == true){
             mapUpdate(currentPerson);
@@ -56,16 +59,8 @@ app.post("/login", function(req,res){
 });
 
 
-server.listen(3000);//************ */
+server.listen(process.env.PORT || 8080);//************ */
 
-
-//closing data base
-db.close((err) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log('Close the database connection.');
-  });
 
   //*********************************************** 
   //********************************************* */
@@ -122,11 +117,11 @@ db.close((err) => {
     }
   }//lookForMatch
 
-  function findDist(location1, location2){
+  function findDist(person1, person2){
     var earthRadius = 3958.75;
-    var latDiff = Math.toRadians(lat_b-lat_a);
-    var lngDiff = Math.toRadians(lng_b-lng_a);
-    var a = Math.sin(latDiff /2) * Math.sin(latDiff /2) + Math.cos(Math.toRadians(lat_a)) * Math.cos(Math.toRadians(lat_b)) * Math.sin(lngDiff /2) * Math.sin(lngDiff /2);
+    var latDiff = Math.toRadians(person1.latitude-person2.latitude);
+    var lngDiff = Math.toRadians(person1.longitude-person2.longitude);
+    var a = Math.sin(latDiff /2) * Math.sin(latDiff /2) + Math.cos(Math.toRadians(person2.latitude)) * Math.cos(Math.toRadians(person1.latitude)) * Math.sin(lngDiff /2) * Math.sin(lngDiff /2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     var distance = earthRadius * c;
 
@@ -139,7 +134,21 @@ db.close((err) => {
       aUser.matchedWith = aTranslator.username;
       aTranslator.matchedWith =aUser.username;
 
-      //calculate path
+      //calculate path with api
+      https.get(`https://api.mapbox.com/directions/v5/mapbox/driving/${aTranslator.longitude},${aTranslator.latitude};${aUser.longitude},${aUser.latitude}.json?access_token=${mapKey}&overview=full`, (resp) => {
+        let data = ''
+     
+        resp.on('data', (chunk) => {
+          data += chunk
+        })
+     
+        resp.on('end', () => {
+          let locDataObj = JSON.parse(data);
+          locDataObj.routes[0].geometry
+        })
+      })//https get request
+     
+     
 
       var locTranslator = JSON.stringify(aTranslator.location);
       var locUser = JSON.stringify(aUser.location);
