@@ -203,7 +203,7 @@ function match(aUser, aTranslator) {
             console.log(data)
 
             var message
-            if (locDataObj.routes.length > 0) {
+            if (locDataObj.hasOwnProperty(routes) && locDataObj.routes.length > 0) {
 
                 message = {
                     path:locDataObj.routes[0].geometry,
