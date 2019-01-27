@@ -7,7 +7,10 @@ app.use(express.json())
 
 var appUsers =[];
 
-app.get('/', (req, res) => res.send('hello'))
+//express.static('/');
+app.use(express.static(__dirname));
+
+app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'))
 
 app.post("/register", function(req,res){
     newUser = {
@@ -26,11 +29,32 @@ app.post("/register", function(req,res){
 
 //sockets    
 io.on('connection', (socket) => { 
-    //thisSocketID = socket.id;
-    //currentPerson.socketID = socket.id;
+    let thisSocketID = socket.id;
     let currentPerson;
+
+    //currentPerson.socketID = socket.id;
+    socket.on("logon", (data) => {
+        let temp = JSON.parse(data);
+
+        console.log(temp);
+
+        for (person of appUsers){
+            if (person.username == temp.username)
+                currentPerson = person;
+        }
     
-    console.log("This is the socket", socket)
+        currentPerson.socketID = thisSocketID;
+
+        currentPerson.longitude = temp.longitude;
+        currentPerson.latitude = temp.latitude;
+        currentPerson.role = temp.role;
+
+        console.log(currentPerson)
+    })
+
+    //let currentPerson;
+    
+    //console.log("This is the socket", socket)
 
     //find user
     // for (person of appUsers){
