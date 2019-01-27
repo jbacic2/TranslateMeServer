@@ -189,6 +189,7 @@ function match(aUser, aTranslator) {
     aUser.matchedWith = aTranslator.username;
     aTranslator.matchedWith = aUser.username;
 
+    let mapKey = "pk.eyJ1IjoiZGVsbGlzZCIsImEiOiJjam9obzZpMDQwMGQ0M2tsY280OTh2M2o5In0.XtnbkAMU7nIMkq7amsiYdw"
     //calculate path with api
     https.get(`https://api.mapbox.com/directions/v5/mapbox/driving/${aTranslator.longitude},${aTranslator.latitude};${aUser.longitude},${aUser.latitude}.json?access_token=${mapKey}&overview=full`, (resp) => {
         let data = ''
