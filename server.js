@@ -7,17 +7,19 @@ var appUsers =[];
 app.get('/', (req, res) => res.send('hello'))
 
 app.post("/register", function(req,res){
+    let dataObj = JSON.parse(req.body)
     newUser = {
-        username: req.body.username,
-        name: req.body.name,
+        username: dataObj.username,
+        name: dataObj.name,
         role: 'OFFLINE',
-        longitude: req.body.longitude,
-        latitude: req.body.latitude,
+        longitude: dataObj.longitude,
+        latitude: dataObj.latitude,
         socketID: null,
         matchedWith: null
     }
   
    appUsers.push(newUser);
+   res.send(JSON.stringify(newUser))
 })
 
 app.post("/login", function(req,res){
