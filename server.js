@@ -21,13 +21,15 @@ app.post("/register", function(req,res){
     }
   
    appUsers.push(newUser);
-   res.send(JSON.stringify(newUser))
+   res.send(JSON.stringify({approved:true}))
 })
 
-app.post("/login", function(req,res){
-    
+//sockets    
+io.on('connection', (socket) => { 
+    //thisSocketID = socket.id;
+    //currentPerson.socketID = socket.id;
     let currentPerson;
-
+    
     //find user
     for (person of appUsers){
         if (person.username == req.body.username)
@@ -37,30 +39,33 @@ app.post("/login", function(req,res){
     currentPerson.longitude = req.body.longitude;
     currentPerson.latitude = req.body.latitude;
     currentPerson.role = req.body.role;
-
-    //sockets    
-    io.on('connection', () => { 
         
-        currentPerson.socketID = socket.id;
 
-        lookForMatch(currentPerson);
+    lookForMatch(currentPerson);
 
-        //updates location
-        socket.on("locationUpdate", function(from, data){
-            currentPerson.longitude = req.body.longitude;
-            currentPerson.latitude = req.body.latitude;
-
-            if (currentPerson.matched == true){
-            mapUpdate(currentPerson);
-           }
-            else{
-                lookForMatch(currentPerson);
-            }
-
-        });
+    /*app.post("/login", function(req,res){
     
-    });//io.on connect
-});
+
+        send.res("");
+    });*/
+    
+
+    //updates location
+    socket.on("locationUpdate", function(from, data){
+        currentPerson.longitude = req.body.longitude;
+        currentPerson.latitude = req.body.latitude;
+
+        if (currentPerson.matched == true){
+            mapUpdate(currentPerson);
+        }
+        else{
+            lookForMatch(currentPerson);
+        }
+
+    });
+    
+});//io.on connect
+
 
 
 
