@@ -62,6 +62,7 @@ wss.on('connection', (ws) => {
             appUsers[index].latitude = data.data.latitude;
 
             if (appUsers[index].matchedWith != null) {
+                console.log("map update here")
                 mapUpdate(appUsers[index]);
             } else {
                 lookForMatch(appUsers[index]);
@@ -197,6 +198,10 @@ function match(aUser, aTranslator) {
     aTranslator.matchedWith = aUser.username;
 
     let mapKey = "pk.eyJ1IjoiZGVsbGlzZCIsImEiOiJjam9obzZpMDQwMGQ0M2tsY280OTh2M2o5In0.XtnbkAMU7nIMkq7amsiYdw"
+
+    console.log("this is the mapkey:")
+    console.log(`https://api.mapbox.com/directions/v5/mapbox/walking/${aTranslator.longitude},${aTranslator.latitude};${aUser.longitude},${aUser.latitude}.json?access_token=${mapKey}&overview=full`)
+
     //calculate path with api
     https.get(`https://api.mapbox.com/directions/v5/mapbox/walking/${aTranslator.longitude},${aTranslator.latitude};${aUser.longitude},${aUser.latitude}.json?access_token=${mapKey}&overview=full`, (resp) => {
         let data = ''
