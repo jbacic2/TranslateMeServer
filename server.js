@@ -202,11 +202,20 @@ function match(aUser, aTranslator) {
             let locDataObj = JSON.parse(data);
             console.log(data)
 
-            var message = {
-                path:locDataObj.routes[0].geometry,
-                user:  aTranslator 
+            var message
+            if (locDataObj.routes.length > 0) {
+
+                message = {
+                    path:locDataObj.routes[0].geometry,
+                    user:  aTranslator 
+                }
+            } else {
+                message = {
+                    path: "",
+                    user: aTranslator
+                }
             }
-            
+
             aUser.socketID.send(JSON.stringify(message));
 
             message["user"]= aUser
