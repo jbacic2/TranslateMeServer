@@ -41,12 +41,17 @@ wss.on('connection', (ws) => {
 
         if (data.type === 'logon'){
 
+            if (data.data.role != "OFFLINE") {
             appUsers[index].socketID = ws;
             console.log(ws)
     
             appUsers[index].longitude = data.data.longitude;
             appUsers[index].latitude = data.data.latitude;
             appUsers[index].role = data.data.role;
+            } else {
+                // Remove any matches that were legft
+                appUsers[index].matchedWith = null;
+            }
             //lookForMatch(currentPerson);
 
         }//longon
