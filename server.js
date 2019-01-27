@@ -1,6 +1,7 @@
 const express           = require('express');
 const app               = express();
 const server            = require('http').createServer(app);
+const https = require('https')
 //const io                = require('socket.io')(server);
 const WebSocket = require('ws')
 const wss = new WebSocket.Server({server: server})
@@ -30,7 +31,6 @@ wss.on('connection', (ws) => {
         let data = JSON.parse(message)
 
         let currrentPerson;
-        console.log(appUsers)
         let index = 0;
         for (let i =0; i<appUsers.length; i++) {
             if (appUsers[i].username == data.data.username)
