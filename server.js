@@ -9,15 +9,7 @@ app.use(express.json())
 
 
 //Fake user for testing
-var appUsers = [newUser = {
-    username: 'omar',
-    name: 'hi',
-    role: 'OFFLINE',
-    longitude: 12,
-    latitude: 14,
-    socketID: null,
-    matchedWith: null
-}];
+var appUsers = [];
 
 
 /**
@@ -38,7 +30,7 @@ wss.on('connection', (ws) => {
         let data = JSON.parse(message)
 
         let currrentPerson;
-
+        console.log(appUsers)
         for (person of appUsers) {
             if (person.username == data.data.username)
                 currentPerson = person;
