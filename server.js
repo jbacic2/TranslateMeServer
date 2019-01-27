@@ -31,37 +31,40 @@ wss.on('connection', (ws) => {
 
         let currrentPerson;
         console.log(appUsers)
+        let index = 0;
         for (let i =0; i<appUsers.length; i++) {
             if (appUsers[i].username == data.data.username)
                 currentPerson = appUsers[i];
+                index = i;
+                break;
         }
     
         
 
         if (data.type == 'logon'){
 
-            currentPerson.socketID = ws;
+            appUsers[index].socketID = ws;
     
-            currentPerson.longitude = data.data.longitude;
-            currentPerson.latitude = data.data.latitude;
-            currentPerson.role = data.data.role;
+            appUsers[index].longitude = data.data.longitude;
+            appUsers[index].latitude = data.data.latitude;
+            appUsers[index].role = data.data.role;
 
     
-            console.log("logon" + currentPerson)
+            console.log("logon" + appUsers[index])
 
             //lookForMatch(currentPerson);
 
 
         }//longon
         else if(data.type =="locationUpdate"){
-            currentPerson.longitude = data.data.longitude;
-            currentPerson.latitude = data.data.latitude;
+            appUsers[index].longitude = data.data.longitude;
+            appUsers[index].latitude = data.data.latitude;
 
-            console.log("locationUPdate" + currentPerson)
-            if (currentPerson.matchedWith != null) {
-                mapUpdate(currentPerson);
+            console.log("locationUPdate" + appUsers[index])
+            if (appUsers[index].matchedWith != null) {
+                mapUpdate(appUsers[index]);
             } else {
-                lookForMatch(currentPerson);
+                lookForMatch(appUsers[index]);
             }
         }
 
@@ -137,7 +140,6 @@ function lookForMatch(currentPerson) {
     }
 
     if (currentPerson.role == "TRANSLATOR") {
-        console.log("translator")
 
         var currentUsers = [];
 
