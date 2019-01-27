@@ -211,7 +211,7 @@ function match(aUser, aTranslator) {
                 }
             } else {
                 message = {
-                    path: "",
+                    path: null,
                     user: aTranslator
                 }
             }
