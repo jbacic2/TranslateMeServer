@@ -10,7 +10,7 @@ app.use(express.json())
 
 
 //Fake user for testing
-var appUsers = [];
+let appUsers = [];
 
 
 /**
@@ -114,6 +114,7 @@ function lookForMatch(currentPerson) {
 
         let currentTranslators = appUsers.filter(u => u.role == "TRANSLATOR")
         console.log(currentTranslators)
+        console.log(appUsers)
 
         //if there are multiple translators find the closest
         if (currentTranslators.length > 0) {
