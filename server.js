@@ -56,6 +56,7 @@ wss.on('connection', (ws) => {
 
         }//longon
         else if(data.type === "locationUpdate"){
+            appUsers[index].socketID = ws;
             appUsers[index].longitude = data.data.longitude;
             appUsers[index].latitude = data.data.latitude;
 
