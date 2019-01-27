@@ -185,7 +185,7 @@ server.listen(process.env.PORT || 8080); //************ */
 function lookForMatch(currentPerson) {
 
     //check for match USER
-    if (currentPerson.role == USER) {
+    if (currentPerson.role == "USER") {
         var currentTranslators = [];
 
         //find list of tranlators
@@ -208,7 +208,7 @@ function lookForMatch(currentPerson) {
         } //if 
     }
 
-    if (currentPerson.role == TRANSLATOR) {
+    if (currentPerson.role == "TRANSLATOR") {
         var currentUsers = [];
 
         //find list of users
