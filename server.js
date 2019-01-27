@@ -68,47 +68,7 @@ wss.on('connection', (ws) => {
 
         console.log('received: %s', message);
       });
-    //const connection = req.accept('echo-protocol', req.origin);
-
-    //console.log((new Date()) + "Accepted");
-
-    //get id
-
-    /*connection.on('*', (message) => {
-        console.log("Received data" + message);
-
-        let data=message.data
-
-        if (message.type == 'logon'){
-
-            let currrentPerson;
-
-            for (person of appUsers) {
-                if (person.username == data.username)
-                    currentPerson = person;
-            }
     
-            currentPerson.socketID = ws;
-    
-            currentPerson.longitude = data.longitude;
-            currentPerson.latitude = data.latitude;
-            currentPerson.role = data.role;
-    
-            console.log(currentPerson)
-
-        }//longon
-        else if(message.type =="locationUpdate"){
-            currentPerson.longitude = data.longitude;
-            currentPerson.latitude = data.latitude;
-
-            if (currentPerson.matched == true) {
-                mapUpdate(currentPerson);
-            } else {
-                lookForMatch(currentPerson);
-            }
-        }
-
-    })*/
 })//on connect
 
 
