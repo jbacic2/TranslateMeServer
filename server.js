@@ -224,7 +224,9 @@ function match(aUser, aTranslator) {
             aUser.socketID.send(JSON.stringify(message));
 
             message.user = aUser
-            aTranslator.socketID.send(JSON.stringify(message));
+            if (aTranslator.socketID.readyState === WebSocket.OPEN) {
+                aTranslator.socketID.send(JSON.stringify(message));
+            }
 
         })
     }) //https get request
